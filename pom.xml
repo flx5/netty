@@ -614,6 +614,8 @@
     <module>resolver-dns</module>
     <module>resolver-dns-classes-macos</module>
     <module>resolver-dns-native-macos</module>
+    <module>resolver-dns-classes-windows</module>
+    <module>resolver-dns-native-windows</module>
     <module>transport</module>
     <module>transport-native-unix-common-tests</module>
     <module>transport-native-unix-common</module>
@@ -1797,7 +1799,12 @@
         <plugin>
           <groupId>org.fusesource.hawtjni</groupId>
           <artifactId>maven-hawtjni-plugin</artifactId>
-          <version>1.14</version>
+          <version>1.15</version>
+        </plugin>
+        <plugin>
+          <groupId>org.fusesource.hawtjni</groupId>
+          <artifactId>hawtjni-maven-plugin</artifactId>
+          <version>1.18</version>
         </plugin>
         <plugin>
           <groupId>kr.motd.maven</groupId>
