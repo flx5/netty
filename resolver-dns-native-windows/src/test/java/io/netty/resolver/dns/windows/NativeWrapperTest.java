@@ -15,17 +15,21 @@
  */
 package io.netty.resolver.dns.windows;
 
-import java.net.InetSocketAddress;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
-// TODO Rename to something like InterfaceConfiguration?
-final class DnsResolver {
-    private final InetSocketAddress[] nameservers;
+import static org.assertj.core.api.Assertions.assertThat;
 
-    DnsResolver(InetSocketAddress[] nameservers) {
-        this.nameservers = nameservers;
-    }
+@EnabledOnOs(OS.WINDOWS)
+public class NativeWrapperTest {
+    @Test
+    void testNativeCall() {
+        NativeWrapper.ensureAvailability();
 
-    InetSocketAddress[] nameservers() {
-        return nameservers;
+        DnsResolver[] resolvers = NativeWrapper.resolvers();
+        assert resolvers.length == 1;
+        System.out.println("Resolver count: " + resolvers.length);
+      //  assertThat(resolvers).hasSize(1);
     }
 }

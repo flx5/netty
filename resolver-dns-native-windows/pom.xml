@@ -50,11 +50,10 @@
                   <name>netty_resolver_dns_native_windows_${os.detected.arch}</name>
                   <nativeSourceDirectory>${project.basedir}/src/main/c</nativeSourceDirectory>
                   <libDirectory>${project.build.outputDirectory}</libDirectory>
-                  <configureArgs>
-                  </configureArgs>
                   <windowsBuildTool>msbuild</windowsBuildTool>
                   <windowsPlatformToolset>v143</windowsPlatformToolset>
                   <windowsTargetPlatformVersion>10.0.19041.0</windowsTargetPlatformVersion>
+                  <windowsCustomProps>true</windowsCustomProps>
                 </configuration>
                 <goals>
                   <goal>generate</goal>

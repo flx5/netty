@@ -153,6 +153,13 @@ public final class NativeLibraryLoader {
      * Load the given library with the specified {@link ClassLoader}
      */
     public static void load(String originalName, ClassLoader loader) {
+        load(originalName, loader, null);
+    }
+
+    /**
+     * Load the given library with the specified {@link ClassLoader}
+     */
+    public static void load(String originalName, ClassLoader loader, String platform) {
         String mangledPackagePrefix = calculateMangledPackagePrefix();
         String name = mangledPackagePrefix + originalName;
         List<Throwable> suppressed = new ArrayList<Throwable>();
@@ -165,7 +172,7 @@ public final class NativeLibraryLoader {
         }
 
         String libname = System.mapLibraryName(name);
-        String path = NATIVE_RESOURCE_HOME + libname;
+        String path = NATIVE_RESOURCE_HOME + (platform == null ? "" : platform + "/") + libname;
 
         InputStream in = null;
         OutputStream out = null;
