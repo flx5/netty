@@ -19,6 +19,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 
+import java.net.InetSocketAddress;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @EnabledOnOs(OS.WINDOWS)
@@ -28,8 +30,15 @@ public class NativeWrapperTest {
         NativeWrapper.ensureAvailability();
 
         DnsResolver[] resolvers = NativeWrapper.resolvers();
-        assert resolvers.length == 1;
         System.out.println("Resolver count: " + resolvers.length);
-      //  assertThat(resolvers).hasSize(1);
+
+        for (int i = 0; i < resolvers.length; ++i) {
+            System.out.println("Resolver " + i);
+            for (InetSocketAddress addr : resolvers[i].nameservers()) {
+                System.out.println("Nameserver: " + addr.getAddress().getHostAddress());
+            }
+        }
+
+        //  assertThat(resolvers).hasSize(1);
     }
 }

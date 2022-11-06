@@ -18,7 +18,7 @@ package io.netty.resolver.dns.windows;
 import java.net.InetSocketAddress;
 
 // TODO Rename to something like InterfaceConfiguration?
-final class DnsResolver {
+public final class DnsResolver {
     private final InetSocketAddress[] nameservers;
 
     DnsResolver(InetSocketAddress[] nameservers) {
