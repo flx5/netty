@@ -594,7 +594,7 @@
   </properties>
 
   <modules>
-    <module>all</module>
+   <module>all</module>
     <module>dev-tools</module>
     <module>common</module>
     <module>buffer</module>
@@ -614,7 +614,6 @@
     <module>resolver-dns</module>
     <module>resolver-dns-classes-macos</module>
     <module>resolver-dns-native-macos</module>
-    <module>resolver-dns-classes-windows</module>
     <module>resolver-dns-native-windows</module>
     <module>transport</module>
     <module>transport-native-unix-common-tests</module>
@@ -640,7 +639,7 @@
     <module>testsuite-native-image-client-runtime-init</module>
     <module>transport-blockhound-tests</module>
     <module>microbench</module>
-    <module>bom</module>
+    <module>bom</module>-->
   </modules>
 
   <dependencyManagement>

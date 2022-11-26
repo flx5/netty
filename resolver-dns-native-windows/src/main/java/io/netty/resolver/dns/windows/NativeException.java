@@ -15,17 +15,8 @@
  */
 package io.netty.resolver.dns.windows;
 
-import java.net.InetSocketAddress;
-
-// TODO Rename to something like InterfaceConfiguration?
-public final class DnsResolver {
-    private final InetSocketAddress[] nameservers;
-
-    DnsResolver(InetSocketAddress[] nameservers) {
-        this.nameservers = nameservers;
-    }
-
-    InetSocketAddress[] nameservers() {
-        return nameservers;
+public class NativeException extends RuntimeException {
+    public NativeException(String message) {
+        super(message);
     }
 }

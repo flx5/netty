@@ -41,24 +41,43 @@
       <build>
         <plugins>
           <plugin>
-            <groupId>org.fusesource.hawtjni</groupId>
-            <artifactId>hawtjni-maven-plugin</artifactId>
+            <groupId>com.googlecode.cmake-maven-project</groupId>
+            <artifactId>cmake-maven-plugin</artifactId>
+            <version>3.23.2-b1</version>
             <executions>
               <execution>
-                <id>build-native-lib</id>
-                <configuration>
-                  <name>netty_resolver_dns_native_windows_${os.detected.arch}</name>
-                  <nativeSourceDirectory>${project.basedir}/src/main/c</nativeSourceDirectory>
-                  <libDirectory>${project.build.outputDirectory}</libDirectory>
-                  <windowsBuildTool>msbuild</windowsBuildTool>
-                  <windowsPlatformToolset>v143</windowsPlatformToolset>
-                  <windowsTargetPlatformVersion>10.0.19041.0</windowsTargetPlatformVersion>
-                  <windowsCustomProps>true</windowsCustomProps>
-                </configuration>
+                <id>cmake-generate</id>
                 <goals>
                   <goal>generate</goal>
-                  <goal>build</goal>
                 </goals>
+                <configuration>
+                  <options>
+                    <option>-DJAVA_ARCH:string=${os.detected.arch}</option>
+                    <option>-A x${os.detected.bitness}</option>
+                    <option>-DCMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE:string=${project.build.outputDirectory}/META-INF/native</option>
+                  </options>
+                  <sourcePath>${project.basedir}/src/main/c</sourcePath>
+                  <targetPath>${project.build.directory}/native</targetPath>
+                </configuration>
+              </execution>
+              <execution>
+                <id>cmake-compile</id>
+                <goals>
+                  <goal>compile</goal>
+                </goals>
+                <configuration>
+                  <config>Release</config>
+                  <projectDirectory>${project.build.directory}/native</projectDirectory>
+                </configuration>
+              </execution>
+              <execution>
+                <id>cmake-test</id>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <configuration>
+                  <buildDirectory>${project.build.directory}/native</buildDirectory>
+                </configuration>
               </execution>
             </executions>
           </plugin>
@@ -100,9 +119,15 @@
   </properties>
 
   <dependencies>
+    <!-- TODO Remove after testing -->
     <dependency>
       <groupId>io.netty</groupId>
-      <artifactId>netty-resolver-dns-classes-windows</artifactId>
+      <artifactId>netty-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-resolver-dns</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>

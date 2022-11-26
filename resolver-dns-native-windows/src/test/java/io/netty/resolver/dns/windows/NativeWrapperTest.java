@@ -29,16 +29,18 @@ public class NativeWrapperTest {
     void testNativeCall() {
         NativeWrapper.ensureAvailability();
 
-        DnsResolver[] resolvers = NativeWrapper.resolvers();
-        System.out.println("Resolver count: " + resolvers.length);
+        NetworkAdapter[] adapters = NativeWrapper.adapters();
+        System.out.println("Adapter count: " + adapters.length);
 
-        for (int i = 0; i < resolvers.length; ++i) {
-            System.out.println("Resolver " + i);
-            for (InetSocketAddress addr : resolvers[i].nameservers()) {
+        for (int i = 0; i < adapters.length; ++i) {
+            System.out.println("Adapter " + i);
+            for (InetSocketAddress addr : adapters[i].nameservers()) {
                 System.out.println("Nameserver: " + addr.getAddress().getHostAddress());
             }
-        }
 
-        //  assertThat(resolvers).hasSize(1);
+            for (String searchDomain : adapters[i].searchDomains()) {
+                System.out.println("Search Domain: " + searchDomain);
+            }
+        }
     }
 }

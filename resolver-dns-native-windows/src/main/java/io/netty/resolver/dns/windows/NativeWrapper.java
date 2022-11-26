@@ -15,10 +15,8 @@
  */
 package io.netty.resolver.dns.windows;
 
-import io.netty.util.internal.ClassInitializerUtil;
 import io.netty.util.internal.NativeLibraryLoader;
 import io.netty.util.internal.PlatformDependent;
-import io.netty.util.internal.ThrowableUtil;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
@@ -28,15 +26,6 @@ public final class NativeWrapper {
             InternalLoggerFactory.getInstance(NativeWrapper.class);
 
     static {
-        // Preload all classes that will be used in the OnLoad(...) function of JNI to eliminate the possiblity of a
-        // class-loader deadlock. This is a workaround for https://github.com/netty/netty/issues/11209.
-
-        // This needs to match all the classes that are loaded via NETTY_JNI_UTIL_LOAD_CLASS or looked up via
-        // NETTY_JNI_UTIL_FIND_CLASS.
-        // TODO Figure out which classes are required here
-        ClassInitializerUtil.tryLoadClasses(DnsResolver.class, byte[].class, String.class
-        );
-
         Throwable cause = null;
         try {
             loadNativeLibrary();
@@ -55,7 +44,7 @@ public final class NativeWrapper {
 
         String sharedLibName = "netty_resolver_dns_native_windows" + '_' + PlatformDependent.normalizedArch();
         ClassLoader cl = PlatformDependent.getClassLoader(NativeWrapper.class);
-        NativeLibraryLoader.load(sharedLibName, cl, "windows" + PlatformDependent.bitMode());
+        NativeLibraryLoader.load(sharedLibName, cl);
     }
 
     public static boolean isAvailable() {
@@ -72,5 +61,5 @@ public final class NativeWrapper {
     public static Throwable unavailabilityCause() {
         return UNAVAILABILITY_CAUSE;
     }
-    public static native DnsResolver[] resolvers();
+    public static native NetworkAdapter[] adapters();
 }
